@@ -148,8 +148,12 @@ var obj = {
     },
 
     retrieveItemRefHref : function ($itemRefElement, packageDocument) {
-
-        return $("#" + $itemRefElement.attr("idref"), packageDocument).attr("href");
+        var idref = $itemRefElement.attr("idref");
+        if (idref !== undefined) {
+            // must escape these chars or jquery breaks
+            idref = idref.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" );
+        } 
+        return $("#" + idref, packageDocument).attr("href");
     },
 
     indexOutOfRange : function (targetIndex, numChildElements) {
